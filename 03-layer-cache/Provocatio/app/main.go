@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	msg := flag.String("msg", "Hello", "인사 메시지")
+	msg := flag.String("msg", "Hi", "인사 메시지")
 	flag.Parse()
 
 	var (
