@@ -5,6 +5,10 @@
 ```dockerfile
 FROM golang:1.22
 WORKDIR /app
+ENTRYPOINT ["./server"]
+# 기본 인자 — docker run 뒤에 인자를 주면 이 줄이 덮어써진다
+CMD ["-msg", "Hello from Container!"]
+```
 COPY go.mod .
 RUN go mod download
 COPY . .
@@ -12,10 +16,6 @@ RUN go build -o server .
 EXPOSE 5000
 
 # 항상 실행되는 진입점 (고정)
-ENTRYPOINT ["./server"]
-# 기본 인자 — docker run 뒤에 인자를 주면 이 줄이 덮어써진다
-CMD ["-msg", "Hello from Container!"]
-```
 
 ## 2. 핵심 개념 — ENTRYPOINT와 CMD
 
