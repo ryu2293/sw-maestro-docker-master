@@ -44,6 +44,17 @@ func main() {
 		fmt.Fprintf(w, "%d", n)
 	})
 
+	http.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
+		// DB 연결까지 확인하고 싶다면:
+		if err := db.Ping(); err != nil {
+			w.WriteHeader(http.StatusServiceUnavailable)
+			fmt.Fprintln(w, "DB unreachable")
+			return
+		}
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintln(w, "OK")
+	})
+
 	log.Println("api listening on :6000")
 	http.ListenAndServe(":6000", nil)
 }
